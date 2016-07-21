@@ -1,0 +1,12 @@
+[submodule "lib/matrix"]
+	path = lib/matrix
+	url = https://github.com/hzeller/rpi-rgb-led-matrix.git
+[submodule "lib/crow"]
+	path = lib/crow
+	url = https://github.com/ipkn/crow.git
+[submodule "lib/cimg"]
+	path = lib/cimg
+	url = https://github.com/dtschump/CImg.git
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json.git
