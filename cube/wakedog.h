@@ -11,7 +11,7 @@
 
 class Wakedog {
 private:
-    std::unique_ptr<std::thread> thread;
+    std::thread thread;
 
     bool done = false;
 
@@ -27,17 +27,15 @@ private:
 public:
 
     Wakedog(Ringer &ringer) : ringer(ringer) {
-        thread = std::unique_ptr<std::thread>(new std::thread([this] {
+        thread = std::thread([this] {
             watch();
-        }));
+        });
     }
 
     ~Wakedog() {
-        std::unique_lock<std::mutex> lock(mtx);
         done = true;
         cv.notify_one();
-        lock.unlock();
-        thread->join();
+        thread.join();
     }
 
     void setAlarms(const std::vector<Alarm> &new_alarms) {
@@ -52,6 +50,10 @@ public:
 
         cv.notify_one();
     }
+
+    void writeAlarms(std::string path);
+
+    void readAlarms(std::string path);
 
     template<typename Functor>
     void visitAlarms(Functor f) {

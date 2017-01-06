@@ -19,6 +19,7 @@ void APIServer::start() {
             out["name"] = alarm.getName();
             out["wake_time"] = alarm.getWakeTime().count();
             out["enabled"] = alarm.isEnabled();
+            out["weekdays"] = alarm.getWeekdays();
 
             j.push_back(out);
         });
@@ -33,10 +34,18 @@ void APIServer::start() {
             json = nlohmann::json::parse(req.body);
 
             for (auto &element : json) {
+                nlohmann::json &weekdays = element["weekdays"];
+                std::array<bool, 7> days;
+
+
+                std::copy(weekdays.begin(), weekdays.end(), days.begin());
+                
+
                 alarms.push_back(Alarm(
                         element["name"],
                         std::chrono::duration<int, std::ratio<1, 1>>(element["wake_time"]),
-                        element["enabled"])
+                        element["enabled"],
+                        days)
                 );
             }
         } catch (std::invalid_argument e) {
@@ -46,10 +55,11 @@ void APIServer::start() {
         std::cout << "Received new alarms" << std::endl;
 
         wakedog.setAlarms(alarms);
+        wakedog.writeAlarms("/root/alarms.json");
 
         return crow::response(200);
     });
 
-    app.port(port).multithreaded().run();
+    app.port(port).run();
 }
 

@@ -7,12 +7,7 @@
 class EmptyScreen: public Screen {
 
 public:
-    void draw(Canvas *canvas, float elapsed) override {
-
-    }
-
-    bool isEmpty() override {
-        return true;
+    void draw(rgb_matrix::RGBMatrix &matrix, float elapsed) override {
     }
 };
 

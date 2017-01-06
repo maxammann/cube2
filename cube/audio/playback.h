@@ -3,6 +3,7 @@
 
 
 #include <functional>
+#include "playback_screen.h"
 
 bool never_stop();
 
@@ -14,9 +15,9 @@ public:
     ~Playback();
 
 
-    void playDefault(char *file_path, double seconds) const;
+    void playDefault(char *file_path) const;
 
-    void play(std::string path, double seconds, double max_vol, std::function<bool()> stop = never_stop) const;
+    void play(std::string path, PlaybackScreen &screen, std::function<bool()> stop = never_stop) const;
 };
 
 

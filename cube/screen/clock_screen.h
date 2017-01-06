@@ -4,18 +4,12 @@
 
 #include "screen.h"
 
-class ClockScreen: public Screen {
+class ClockScreen : public MagickScreen {
 
 public:
-    void draw(Canvas *canvas, float elapsed) override {
-        canvas->getImage()->fillColor(Magick::ColorRGB(1, 0, 0));
-//        canvas->getImage()->draw(Magick::DrawableRectangle(0, 32, 32, 0));
-        canvas->getImage()->draw(Magick::DrawableText(0, 16, "Clock"));
-    }
+    ClockScreen();
 
-    bool isEmpty() override {
-        return false;
-    }
+    void draw(Magick::Image &canvas, float elapsed) override;
 };
 
 

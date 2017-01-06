@@ -4,6 +4,7 @@
 
 #include "audio/playback.h"
 #include "alarm.h"
+#include "active_screen.h"
 
 class Ringer {
 public:
@@ -14,10 +15,11 @@ public:
 class AudioRinger : public Ringer {
 private:
     const Playback &playback;
+    ScreenTask &screenTask;
     bool stopped;
 
 public:
-    AudioRinger(const Playback &playback) : playback(playback) { }
+    AudioRinger(const Playback &playback, ScreenTask &screenTask) : playback(playback), screenTask(screenTask) { }
 
     ~AudioRinger() {
         stop();

@@ -1,3 +1,6 @@
+add_compile_options(-std=c++14)
+
+
 # WiringPi
 find_package(WiringPi REQUIRED)
 include_directories(${WIRINGPI_INCLUDE_DIRS})
@@ -5,6 +8,14 @@ include_directories(${WIRINGPI_INCLUDE_DIRS})
 # libao
 find_package(AO REQUIRED)
 include_directories(${LIBAO_INCLUDE_DIR})
+
+# libusb
+find_package(libusb REQUIRED)
+include_directories(${LIBUSB_INCLUDE_DIRS})
+
+# fftw3
+find_package(FFTW REQUIRED)
+include_directories(${FFTW_INCLUDE_DIRS})
 
 # rpi-rgb-led-matrix
 include_directories(${PROJECT_SOURCE_DIR}/lib/matrix/include/)
@@ -23,7 +34,7 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/json/src/)
 
 # ImageMagick
 add_definitions(-DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16)
-find_package(ImageMagick COMPONENTS Magick++)
+find_package(ImageMagick COMPONENTS Magick++ MagickCore)
 include_directories(${ImageMagick_INCLUDE_DIRS})
 include_directories(${ImageMagick_Magick++_INCLUDE_DIR})
 include_directories(${ImageMagick_Magick++_INCLUDE_DIRS})
@@ -31,16 +42,22 @@ include_directories(${ImageMagick_Magick++_INCLUDE_DIRS})
 
 add_executable(cube
         main.cpp
-        screen/screen.h
-        screen/empty_screen.h
+        screen/screen.h screen/screen.cpp
 
-        active_screen.cpp active_screen.h
-        canvas.cpp canvas.h
+        active_screen.h active_screen.cpp
         api_server.cpp api_server.h
-        alarm.h alarm.cpp wakedog.cpp wakedog.h ringer.cpp ringer.h
+        alarm.h alarm.cpp
+        wakedog.cpp wakedog.h
+        ringer.cpp ringer.h
         rotary_encoder.cpp rotary_encoder.h
-        audio/playback.cpp audio/playback.h)
-target_link_libraries(cube matrix ${WIRINGPI_LIBRARIES} ${LIBAO_LIBRARIES} ${Boost_LIBRARIES} ${ImageMagick_LIBRARIES})
+        audio/playback.cpp audio/playback.h
+        raspberry/led.h raspberry/led.cpp
 
-add_executable(host_test test.cpp)
-target_link_libraries(host_test ${WIRINGPI_LIBRARIES})
+        screen/gif_screen.h screen/gif_screen.cpp
+        audio/playback_screen.h audio/playback_screen.cpp
+        screen/clock_screen.h screen/clock_screen.cpp
+        screen/boot_screen.h screen/boot_screen.cpp
+        screen/empty_screen.h)
+target_link_libraries(cube matrix ${WIRINGPI_LIBRARIES} ${LIBAO_LIBRARIES} ${Boost_LIBRARIES} ${ImageMagick_LIBRARIES} ${LIBUSB_LIBRARIES} ${FFTW_LIBRARIES})
+
+install(TARGETS cube RUNTIME DESTINATION bin)
