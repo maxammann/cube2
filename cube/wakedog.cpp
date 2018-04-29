@@ -2,7 +2,7 @@
 #include <fstream>
 #include <chrono>
 #include "wakedog.h"
-#include "json.hpp"
+#include "nlohmann/json.hpp"
 
 using json = nlohmann::json;
 

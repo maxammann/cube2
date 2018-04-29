@@ -30,15 +30,15 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/crow/include/)
 
 # Json
 add_definitions(-DCROW_JSON_NO_ERROR_CHECK)
-include_directories(${PROJECT_SOURCE_DIR}/lib/json/src/)
+include_directories(${PROJECT_SOURCE_DIR}/lib/json/include/)
 
 # ImageMagick
 add_definitions(-DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16)
-find_package(ImageMagick COMPONENTS Magick++ MagickCore)
+find_package(ImageMagick 6 COMPONENTS Magick++ MagickCore)
 include_directories(${ImageMagick_INCLUDE_DIRS})
-include_directories(${ImageMagick_Magick++_INCLUDE_DIR})
 include_directories(${ImageMagick_Magick++_INCLUDE_DIRS})
 
+find_library(REAL_TIME rt)
 
 add_executable(cube
         main.cpp
@@ -58,6 +58,13 @@ add_executable(cube
         screen/clock_screen.h screen/clock_screen.cpp
         screen/boot_screen.h screen/boot_screen.cpp
         screen/empty_screen.h)
-target_link_libraries(cube matrix ${WIRINGPI_LIBRARIES} ${LIBAO_LIBRARIES} ${Boost_LIBRARIES} ${ImageMagick_LIBRARIES} ${LIBUSB_LIBRARIES} ${FFTW_LIBRARIES})
+target_link_libraries(cube matrix
+        ${WIRINGPI_LIBRARIES}
+        ${LIBAO_LIBRARIES}
+        ${Boost_LIBRARIES}
+        ${ImageMagick_Magick++_LIBRARY}
+        ${ImageMagick_MagickCore_LIBRARY}
+        ${LIBUSB_LIBRARIES}
+        ${FFTW_LIBRARIES} ${REAL_TIME})
 
 install(TARGETS cube RUNTIME DESTINATION bin)
