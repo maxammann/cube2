@@ -35,20 +35,20 @@ void APIServer::start() {
 
             for (auto &element : json) {
                 nlohmann::json &weekdays = element["weekdays"];
-                std::array<bool, 7> days;
+                std::array<bool, 7> days{};
 
-
-                std::copy(weekdays.begin(), weekdays.end(), days.begin());
-                
+                for (int i = 0; i < 7; ++i) {
+                    days[i] = weekdays.at(i).get<bool>();
+                }
 
                 alarms.push_back(Alarm(
                         element["name"],
                         std::chrono::duration<int, std::ratio<1, 1>>(element["wake_time"]),
                         element["enabled"],
-                        days)
-                );
+                        days
+                ));
             }
-        } catch (std::invalid_argument e) {
+        } catch (std::invalid_argument &e) {
             return crow::response(400);
         }
 

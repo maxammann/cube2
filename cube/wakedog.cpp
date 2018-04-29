@@ -75,7 +75,7 @@ void Wakedog::writeAlarms(std::string path) {
 
         json weekdays = json::array();
         for (int i = 0; i < 7; ++i) {
-            weekdays.push_back(item.isEnabledOnWeekday((const Weekday &) i));
+            weekdays.push_back(item.isEnabledOnWeekday(i));
         }
         alarm["weekdays"] = weekdays;
 
@@ -96,14 +96,12 @@ void Wakedog::readAlarms(std::string path) {
         input >> alarmsArray;
 
 
-        for (json::iterator it = alarmsArray.begin(); it != alarmsArray.end(); ++it) {
-            json alarmJson = *it;
-
+        for (auto alarmJson : alarmsArray) {
             json &jsonWeekdays = alarmJson["weekdays"];
             std::array<bool, 7> weekdays;
 
             for (int i = 0; i < 7; ++i) {
-                weekdays[i] = jsonWeekdays.at(i);
+                weekdays[i] = jsonWeekdays.at(i).get<bool>();
             }
 
             Alarm alarm(alarmJson["name"], std::chrono::duration<int, std::ratio<1, 1>>(alarmJson["wake_time"]),
