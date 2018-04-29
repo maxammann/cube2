@@ -39,7 +39,7 @@ void PlaybackScreen::draw(rgb_matrix::RGBMatrix &matrix, float elapsed) {
                     continue;
                 }
 
-                matrix.SetPixel(x, y, 170, 98, 35);
+                matrix.SetPixel(x, y, 128, 128, 128);
             }
         }
     }

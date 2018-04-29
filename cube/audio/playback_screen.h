@@ -6,7 +6,7 @@
 #include <fftw3.h>
 
 #define HEIGHT 32
-#define BANDS 10
+#define BANDS 8
 
 class PlaybackScreen: public Screen {
 private:

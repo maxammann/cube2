@@ -4,7 +4,7 @@ ClockScreen::ClockScreen(): MagickScreen() {
     canvas.font("Droid-Sans-Bold");
     canvas.fontPointsize(13);
     canvas.antiAlias(false);
-    canvas.fillColor(Magick::ColorRGB(68, 87, 0));
+    canvas.fillColor(Magick::ColorRGB(0, 64, 200));
 }
 
 void ClockScreen::draw(Magick::Image &canvas, float elapsed) {
@@ -15,5 +15,6 @@ void ClockScreen::draw(Magick::Image &canvas, float elapsed) {
     strftime(buffer, 80, "%I\n%M", time);
 
     canvas.textGravity(Magick::GravityType::CenterGravity);
+
     canvas.draw(Magick::DrawableText(0, 0, std::string(buffer)));
 }
