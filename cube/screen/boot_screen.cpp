@@ -5,7 +5,7 @@ void BootScreen::draw(Magick::Image &canvas, float elapsed) {
 }
 
 BootScreen::BootScreen() : MagickScreen() {
-    canvas.font("Droid-Sans-Bold");
+    canvas.font("DejaVu-Sans-Bold");
     canvas.antiAlias(false);
 
     canvas.fillColor(Magick::ColorRGB(1, 0, 0));
