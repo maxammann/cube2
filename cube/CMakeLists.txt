@@ -9,10 +9,6 @@ include_directories(${WIRINGPI_INCLUDE_DIRS})
 find_package(AO REQUIRED)
 include_directories(${LIBAO_INCLUDE_DIR})
 
-# libusb
-find_package(libusb REQUIRED)
-include_directories(${LIBUSB_INCLUDE_DIRS})
-
 # fftw3
 find_package(FFTW REQUIRED)
 include_directories(${FFTW_INCLUDE_DIRS})
@@ -51,7 +47,6 @@ add_executable(cube
         ringer.cpp ringer.h
         rotary_encoder.cpp rotary_encoder.h
         audio/playback.cpp audio/playback.h
-        raspberry/led.h raspberry/led.cpp
 
         screen/gif_screen.h screen/gif_screen.cpp
         audio/playback_screen.h audio/playback_screen.cpp
@@ -64,7 +59,6 @@ target_link_libraries(cube matrix
         ${Boost_LIBRARIES}
         ${ImageMagick_Magick++_LIBRARY}
         ${ImageMagick_MagickCore_LIBRARY}
-        ${LIBUSB_LIBRARIES}
         ${FFTW_LIBRARIES} ${REAL_TIME})
 
 install(TARGETS cube RUNTIME DESTINATION bin)

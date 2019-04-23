@@ -7,8 +7,6 @@
 #include "screen/clock_screen.h"
 
 int main() {
-    off();
-
     std::cout << "Initializing gpio" << std::endl;
     rgb_matrix::GPIO io;
     if (!io.Init()) {
