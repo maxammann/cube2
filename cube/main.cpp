@@ -2,7 +2,6 @@
 #include "active_screen.h"
 #include "api_server.h"
 #include "rotary_encoder.h"
-#include "raspberry/led.h"
 #include "screen/boot_screen.h"
 #include "screen/clock_screen.h"
 
