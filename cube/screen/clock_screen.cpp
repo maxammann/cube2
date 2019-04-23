@@ -1,7 +1,7 @@
 #include "clock_screen.h"
 
 ClockScreen::ClockScreen(): MagickScreen() {
-    canvas.font("Droid-Sans-Bold");
+    canvas.font("DejaVu-Sans-Bold");
     canvas.fontPointsize(13);
     canvas.antiAlias(false);
     canvas.fillColor(Magick::ColorRGB(0, 64, 200));
